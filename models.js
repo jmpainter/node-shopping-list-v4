@@ -33,6 +33,10 @@ const ShoppingList = {
   },
   delete: function(id) {
     console.log(`Deleting shopping list item \`${id}\``);
+    if (!(id in this.items)) {
+      throw StorageException(
+        `Can't delete item \`${id}\` because it doesn't exist.`)
+    }
     delete this.items[id];
   },
   update: function(updatedItem) {
@@ -40,7 +44,7 @@ const ShoppingList = {
     const {id} = updatedItem;
     if (!(id in this.items)) {
       throw StorageException(
-        `Can't update item \`${id}\` because doesn't exist.`)
+        `Can't update item \`${id}\` because it doesn't exist.`)
     }
     this.items[updatedItem.id] = updatedItem;
     return updatedItem;
@@ -68,16 +72,20 @@ const Recipes = {
     console.log('Retreiving recipes');
     return Object.keys(this.items).map(key => this.items[key]);
   },
-  delete: function(itemId) {
-    console.log(`Deleting recipe with id \`${itemId}\``);
-    delete this.items[itemId];
+  delete: function(id) {
+    console.log(`Deleting recipe with id \`${id}\``);
+    if (!(id in this.items)) {
+      throw StorageException(
+        `Can't delete item \`${id}\` because it doesn't exist.`)
+    }
+    delete this.items[id];
   },
   update: function(updatedItem) {
     console.log(`Updating recipe with id \`${updatedItem.id}\``);
     const {id} = updatedItem;
     if (!(id in this.items)) {
       throw StorageException(
-        `Can't update item \`${id}\` because doesn't exist.`)
+        `Can't update item \`${id}\` because it doesn't exist.`)
     }
     this.items[updatedItem.id] = updatedItem;
     return updatedItem;
